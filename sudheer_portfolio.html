@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sudheer Prasanna Kumar Vasetty — Cybersecurity</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #080B0F;
+      --bg2: #0D1117;
+      --bg3: #111820;
+      --border: rgba(0, 255, 140, 0.12);
+      --green: #00FF8C;
+      --green-dim: rgba(0, 255, 140, 0.15);
+      --green-glow: rgba(0, 255, 140, 0.04);
+      --text: #E8EDF2;
+      --text-dim: #6B7B8D;
+      --text-mid: #A0ADB8;
+      --mono: 'Share Tech Mono', monospace;
+      --sans: 'Syne', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    .cursor {
+      width: 8px;
+      height: 8px;
+      background: var(--green);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: screen;
+    }
+
+    .cursor-ring {
+      width: 28px;
+      height: 28px;
+      border: 1px solid rgba(0, 255, 140, 0.4);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9998;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.03) 2px, rgba(0, 0, 0, 0.03) 4px);
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 3rem;
+      background: rgba(8, 11, 15, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--green);
+      letter-spacing: 0.05em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-dim);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--green);
+    }
+
+    section {
+      min-height: 100vh;
+      padding: 120px 3rem 80px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-tag {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--green);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-tag::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--green);
+    }
+
+    #hero {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 140px;
+      position: relative;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--green);
+      letter-spacing: 0.15em;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.2s forwards;
+    }
+
+    .hero-name {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.25rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.4s forwards;
+    }
+
+    .hero-lastname {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.5s forwards;
+      color: var(--green);
+    }
+
+    .hero-role {
+      font-family: var(--mono);
+      font-size: 14px;
+      color: var(--text-mid);
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.6s forwards;
+      max-width: 520px;
+      line-height: 1.8;
+    }
+
+    .hero-role span {
+      color: var(--green);
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.8s forwards;
+    }
+
+    .btn-primary {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      padding: 12px 28px;
+      background: var(--green);
+      color: #000;
+      border: none;
+      cursor: none;
+      font-weight: 600;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary:hover {
+      background: #00cc70;
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      padding: 11px 28px;
+      background: transparent;
+      color: var(--green);
+      border: 1px solid var(--border);
+      cursor: none;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--green);
+      background: var(--green-glow);
+    }
+
+    .btn-resume {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      padding: 11px 28px;
+      background: transparent;
+      color: var(--text-mid);
+      border: 1px solid var(--border);
+      cursor: none;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-resume:hover {
+      border-color: var(--text-mid);
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 3rem;
+      margin-top: 4rem;
+      padding-top: 3rem;
+      border-top: 1px solid var(--border);
+      opacity: 0;
+      animation: fadeUp 0.6s 1s forwards;
+    }
+
+    .stat-num {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--green);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+    }
+
+    #hero::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: -100px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(0, 255, 140, 0.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    #about {
+      min-height: auto;
+      padding-bottom: 120px;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+      margin-top: 2.5rem;
+    }
+
+    .about-text {
+      font-size: 15px;
+      color: var(--text-mid);
+      line-height: 1.9;
+    }
+
+    .about-text p {
+      margin-bottom: 1.25rem;
+    }
+
+    .about-text strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .about-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 1.75rem;
+    }
+
+    .about-card-title {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--green);
+      letter-spacing: 0.15em;
+      margin-bottom: 1.25rem;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      font-size: 13px;
+      gap: 12px;
+    }
+
+    .info-row:last-child {
+      border-bottom: none;
+    }
+
+    .info-key {
+      color: var(--text-dim);
+      font-family: var(--mono);
+      font-size: 11px;
+      flex-shrink: 0;
+    }
+
+    .info-val {
+      color: var(--text);
+      font-weight: 500;
+      text-align: right;
+      font-size: 12px;
+    }
+
+    .info-val.green {
+      color: var(--green);
+    }
+
+    #skills {
+      min-height: auto;
+      padding-bottom: 120px;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .skill-group {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      transition: border-color 0.2s;
+    }
+
+    .skill-group:hover {
+      border-color: rgba(0, 255, 140, 0.3);
+    }
+
+    .skill-group-title {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--green);
+      letter-spacing: 0.15em;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .skill-group-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .skill-tag {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-mid);
+      padding: 4px 10px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      transition: all 0.2s;
+    }
+
+    .skill-tag:hover {
+      border-color: var(--green);
+      color: var(--green);
+      background: var(--green-glow);
+    }
+
+    #experience {
+      min-height: auto;
+      padding-bottom: 120px;
+    }
+
+    .timeline {
+      margin-top: 2.5rem;
+      position: relative;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: var(--border);
+    }
+
+    .timeline-item {
+      padding-left: 2.5rem;
+      padding-bottom: 3rem;
+      position: relative;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -4px;
+      top: 6px;
+      width: 9px;
+      height: 9px;
+      background: var(--green);
+      border-radius: 50%;
+      box-shadow: 0 0 12px var(--green);
+    }
+
+    .timeline-item.ongoing::before {
+      animation: pulse 2s infinite;
+    }
+
+    .tl-date {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--green);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+
+    .tl-role {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .tl-org {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-dim);
+      margin-bottom: 1rem;
+    }
+
+    .tl-desc {
+      font-size: 14px;
+      color: var(--text-mid);
+      line-height: 1.8;
+      max-width: 580px;
+    }
+
+    .tl-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 1rem;
+    }
+
+    .tl-tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 3px 9px;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      letter-spacing: 0.05em;
+    }
+
+    .badge-live {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 2px 8px;
+      background: rgba(0, 255, 140, 0.1);
+      color: var(--green);
+      border: 1px solid rgba(0, 255, 140, 0.25);
+      margin-left: 10px;
+      vertical-align: middle;
+      animation: pulse-border 2s infinite;
+    }
+
+    #threatflash {
+      min-height: auto;
+      padding-bottom: 120px;
+    }
+
+    .tf-hero {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 3rem;
+      margin-top: 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tf-hero::before {
+      content: 'TF';
+      position: absolute;
+      right: -20px;
+      top: -40px;
+      font-size: 200px;
+      font-weight: 800;
+      color: rgba(0, 255, 140, 0.03);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .tf-logo {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .tf-logo span {
+      color: var(--green);
+    }
+
+    .tf-tagline {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--text-dim);
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.05em;
+    }
+
+    .tf-desc {
+      font-size: 15px;
+      color: var(--text-mid);
+      line-height: 1.85;
+      max-width: 600px;
+      margin-bottom: 2rem;
+    }
+
+    .tf-stats {
+      display: flex;
+      gap: 2.5rem;
+      padding: 1.5rem 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 2rem;
+    }
+
+    .tf-stat-num {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--green);
+    }
+
+    .tf-stat-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      margin-top: 2px;
+    }
+
+    .tf-platforms {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .tf-platform {
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      color: var(--text-mid);
+      letter-spacing: 0.08em;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .tf-platform:hover {
+      border-color: var(--green);
+      color: var(--green);
+    }
+
+    #certifications {
+      min-height: auto;
+      padding-bottom: 120px;
+    }
+
+    .certs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+
+    .cert-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      display: block;
+      cursor: none;
+    }
+
+    .cert-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--green);
+      transform: scaleX(0);
+      transition: transform 0.3s;
+      transform-origin: left;
+    }
+
+    .cert-card:hover {
+      border-color: rgba(0, 255, 140, 0.35);
+    }
+
+    .cert-card:hover::after {
+      transform: scaleX(1);
+    }
+
+    .cert-issuer {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--green);
+      letter-spacing: 0.15em;
+      margin-bottom: 0.65rem;
+    }
+
+    .cert-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+    }
+
+    .cert-date {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+
+    .cert-id {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: rgba(0, 255, 140, 0.4);
+      margin-top: 8px;
+    }
+
+    .cert-view {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--green);
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .cert-card:hover .cert-view {
+      opacity: 1;
+    }
+
+    #contact {
+      min-height: auto;
+      padding-bottom: 120px;
+    }
+
+    .contact-wrap {
+      margin-top: 2.5rem;
+    }
+
+    .contact-intro {
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 1.25rem;
+    }
+
+    .contact-intro span {
+      color: var(--green);
+    }
+
+    .contact-sub {
+      font-size: 14px;
+      color: var(--text-mid);
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+      max-width: 560px;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 10px;
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-mid);
+      text-decoration: none;
+      padding: 14px 18px;
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+
+    .contact-link:hover {
+      border-color: var(--green);
+      color: var(--green);
+      background: var(--green-glow);
+    }
+
+    .contact-link-icon {
+      color: var(--green);
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .contact-section-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text-dim);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      margin-top: 2rem;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .footer-text {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
+    }
+
+    .footer-text span {
+      color: var(--green);
+    }
+
+    h2 {
+      font-size: clamp(1.75rem, 4vw, 2.75rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: all 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        box-shadow: 0 0 6px var(--green);
+      }
+
+      50% {
+        box-shadow: 0 0 18px var(--green);
+      }
+    }
+
+    @keyframes pulse-border {
+
+      0%,
+      100% {
+        border-color: rgba(0, 255, 140, 0.25);
+      }
+
+      50% {
+        border-color: rgba(0, 255, 140, 0.6);
+      }
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0;
+      }
+    }
+
+    .blink {
+      animation: blink 1s step-end infinite;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <nav>
+    <div class="nav-logo">sudheer_v<span class="blink">_</span></div>
+    <div class="nav-links">
+      <a href="#about">about</a>
+      <a href="#skills">skills</a>
+      <a href="#experience">experience</a>
+      <a href="#threatflash">threatflash</a>
+      <a href="#certifications">certs</a>
+      <a href="#contact">contact</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <h1 class="hero-name">Sudheer Prasanna Kumar</h1>
+    <div class="hero-lastname">Vasetty.</div>
+    <div class="hero-role">
+      SOC Analyst & Pentester in the making —<br>
+      <span>Founder @ThreatFlash</span> · CEH · CSA · CCNA · Linux · <span>CPENT ongoing</span>
+    </div>
+    <div class="hero-btns">
+      <a href="https://www.linkedin.com/in/sudheerprasannakumarvasetty" target="_blank" class="btn-primary">Connect on
+        LinkedIn</a>
+      <a href="#threatflash" class="btn-ghost">View ThreatFlash →</a>
+      <a href="https://drive.google.com/file/d/1AyNM6ai9JR4-mNZJ8_24JcVkMokiA4Ud/view?usp=sharing" target="_blank"
+        class="btn-resume">↓ Resume</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">16+</div>
+        <div class="stat-label">ThreatFlash Episodes</div>
+      </div>
+      <div>
+        <div class="stat-num">5</div>
+        <div class="stat-label">Training Certs</div>
+      </div>
+      <div>
+        <div class="stat-num">4</div>
+        <div class="stat-label">Platforms</div>
+      </div>
+      <div>
+        <div class="stat-num">2025</div>
+        <div class="stat-label">CS Graduate</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-tag">01 — About</div>
+    <h2 class="reveal">Who I am</h2>
+    <div class="about-grid reveal">
+      <div class="about-text">
+        <p>I'm a <strong>2025 CS graduate</strong> from Raghu Engineering College, Visakhapatnam who went all-in on
+          cybersecurity instead of taking the easy road.</p>
+        <p>No shortcuts. Months of hands-on training in ethical hacking, SOC analysis, CCNA networking, and Linux — and
+          now advancing into penetration testing with <strong>CPENT at Hackers School, Bangalore.</strong></p>
+        <p>While learning, I noticed most people don't understand what's happening when a cyberattack makes the news. So
+          I built <strong>ThreatFlash</strong> — daily 60-second breakdowns of real cyberattacks across YouTube,
+          Instagram, LinkedIn, and X.</p>
+        <p>Looking for an entry-level <strong>SOC Analyst or Penetration Tester</strong> role where I can contribute
+          from day one.</p>
+      </div>
+      <div class="about-card">
+        <div class="about-card-title">// quick_info.json</div>
+        <div class="info-row"><span class="info-key">name</span><span class="info-val">Sudheer Prasanna Kumar
+            Vasetty</span></div>
+        <div class="info-row"><span class="info-key">status</span><span class="info-val green">open_to_work ●</span>
+        </div>
+        <div class="info-row"><span class="info-key">base</span><span class="info-val">Visakhapatnam, India</span></div>
+        <div class="info-row"><span class="info-key">open_to</span><span class="info-val">Vizag · Hyderabad ·
+            Bangalore</span></div>
+        <div class="info-row"><span class="info-key">degree</span><span class="info-val">B.Tech CS — 7.6 CGPA</span>
+        </div>
+        <div class="info-row"><span class="info-key">currently</span><span class="info-val green">CPENT @ Hackers
+            School</span></div>
+        <div class="info-row"><span class="info-key">creator</span><span class="info-val">ThreatFlash ·
+            sudheer.Photog</span></div>
+        <div class="info-row"><span class="info-key">email</span><span
+            class="info-val">sudheerprasannakumarv@gmail.com</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-tag">02 — Skills & Tools</div>
+    <h2 class="reveal">Arsenal</h2>
+    <div class="skills-grid reveal">
+      <div class="skill-group">
+        <div class="skill-group-title">Offensive</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Metasploit</span><span class="skill-tag">Burp Suite</span>
+          <span class="skill-tag">Nmap</span><span class="skill-tag">SQLMap</span>
+          <span class="skill-tag">Hydra</span><span class="skill-tag">John the Ripper</span>
+          <span class="skill-tag">Wireshark</span><span class="skill-tag">Kali Linux</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Defensive / SOC</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Splunk</span><span class="skill-tag">Wazuh</span>
+          <span class="skill-tag">QRadar</span><span class="skill-tag">ELK Stack</span>
+          <span class="skill-tag">Snort</span><span class="skill-tag">SIEM</span>
+          <span class="skill-tag">Log Analysis</span><span class="skill-tag">Incident Response</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Network & OS</div>
+        <div class="skill-tags">
+          <span class="skill-tag">CCNA</span><span class="skill-tag">TCP/IP</span>
+          <span class="skill-tag">Linux Admin</span><span class="skill-tag">Bash Scripting</span>
+          <span class="skill-tag">Cisco IOS</span><span class="skill-tag">Routing & Switching</span>
+          <span class="skill-tag">Firewall</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Frameworks</div>
+        <div class="skill-tags">
+          <span class="skill-tag">MITRE ATT&CK</span><span class="skill-tag">OWASP Top 10</span>
+          <span class="skill-tag">CEH</span><span class="skill-tag">CSA</span>
+          <span class="skill-tag">Python</span><span class="skill-tag">CPENT</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-tag">03 — Experience & Training</div>
+    <h2 class="reveal">Timeline</h2>
+    <div class="timeline reveal">
+      <div class="timeline-item ongoing">
+        <div class="tl-date">APR 2026 — PRESENT</div>
+        <div class="tl-role">CPENT Trainee <span class="badge-live">LIVE</span></div>
+        <div class="tl-org">Hackers School Institute · Bangalore</div>
+        <div class="tl-desc">Advanced penetration testing — exploit development, red team methodologies, privilege
+          escalation, and real-world attack simulation. Going beyond the basics.</div>
+        <div class="tl-tags"><span class="tl-tag">Exploit Development</span><span class="tl-tag">Red Team</span><span
+            class="tl-tag">Privilege Escalation</span></div>
+      </div>
+      <div class="timeline-item ongoing">
+        <div class="tl-date">APR 2026 — PRESENT</div>
+        <div class="tl-role">Founder & Creator <span class="badge-live">LIVE</span></div>
+        <div class="tl-org">ThreatFlash · Self-employed · Remote</div>
+        <div class="tl-desc">Launched and run ThreatFlash — daily 60-second breakdowns of real cyberattacks published
+          across YouTube Shorts, Instagram, LinkedIn, and X. 16+ episodes and growing.</div>
+        <div class="tl-tags"><span class="tl-tag">Threat Intelligence</span><span class="tl-tag">Content
+            Creation</span><span class="tl-tag">YouTube</span><span class="tl-tag">Instagram</span></div>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-date">DEC 2025 — MAR 2026</div>
+        <div class="tl-role">Cybersecurity Trainee — CEH & SOC (CSA)</div>
+        <div class="tl-org">Hacker School · Cartel Software Pvt. Ltd. · Hyderabad</div>
+        <div class="tl-desc">Hands-on training across both offensive and defensive security. Used real tools — not just
+          theory. Built SOC workflows from scratch using enterprise SIEM platforms.</div>
+        <div class="tl-tags"><span class="tl-tag">Metasploit</span><span class="tl-tag">Burp Suite</span><span
+            class="tl-tag">Splunk</span><span class="tl-tag">Wazuh</span><span class="tl-tag">QRadar</span><span
+            class="tl-tag">ELK Stack</span></div>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-date">OCT — NOV 2025</div>
+        <div class="tl-role">CCNA & Linux Trainee</div>
+        <div class="tl-org">Zoom Technologies · Hyderabad</div>
+        <div class="tl-desc">CCNA (200-301) + Cisco Security + Linux Administration + Advanced Linux. The networking and
+          OS foundation that makes every security tool actually make sense.</div>
+        <div class="tl-tags"><span class="tl-tag">CCNA</span><span class="tl-tag">Cisco Security</span><span
+            class="tl-tag">Linux Admin</span><span class="tl-tag">Advanced Linux</span></div>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-date">2021 — 2025</div>
+        <div class="tl-role">B.Tech — Computer Science & Engineering</div>
+        <div class="tl-org">Raghu Engineering College · Visakhapatnam · CGPA 7.6</div>
+        <div class="tl-desc">Member of Photography Club. Participated in cybersecurity and AI-focused hackathons. Built
+          the foundation that led directly into the cybersecurity path.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THREATFLASH -->
+  <section id="threatflash">
+    <div class="section-tag">04 — ThreatFlash</div>
+    <h2 class="reveal">The Channel</h2>
+    <div class="tf-hero reveal">
+      <div class="tf-logo">Threat<span>Flash</span></div>
+      <div class="tf-tagline">// real cyberattacks · explained in 60 seconds · every day</div>
+      <div class="tf-desc">Most people don't understand what's happening when a cyberattack makes the news. ThreatFlash
+        fixes that — every day I research a real attack from the past 24 hours and break it down in plain language. No
+        jargon. Just what happened, how it happened, and why it matters.</div>
+      <div class="tf-stats">
+        <div>
+          <div class="tf-stat-num">16+</div>
+          <div class="tf-stat-label">Episodes Published</div>
+        </div>
+        <div>
+          <div class="tf-stat-num">Apr '26</div>
+          <div class="tf-stat-label">Launch Date</div>
+        </div>
+        <div>
+          <div class="tf-stat-num">4</div>
+          <div class="tf-stat-label">Platforms</div>
+        </div>
+        <div>
+          <div class="tf-stat-num">60s</div>
+          <div class="tf-stat-label">Per Episode</div>
+        </div>
+      </div>
+      <div class="tf-platforms">
+        <a href="https://www.youtube.com/@ThreatFlash" target="_blank" class="tf-platform">▶ YouTube Shorts</a>
+        <a href="https://www.instagram.com/threatflash" target="_blank" class="tf-platform">◈ Instagram</a>
+        <a href="https://www.linkedin.com/in/sudheerprasannakumarvasetty" target="_blank" class="tf-platform">in
+          LinkedIn</a>
+        <a href="https://x.com/threatflash" target="_blank" class="tf-platform">✕ Twitter / X</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section id="certifications">
+    <div class="section-tag">05 — Certifications</div>
+    <h2 class="reveal">Credentials</h2>
+    <div class="certs-grid reveal">
+      <a class="cert-card" href="https://drive.google.com/file/d/13GT5sSXKMoUlStS9ZuhVaFh2RCki5P7c/view?usp=sharing"
+        target="_blank">
+        <div class="cert-issuer">Hacker School · Cartel Software</div>
+        <div class="cert-name">SOC Training — Cyber Security Analyst (CSA Curriculum)</div>
+        <div class="cert-date">Feb 2026 — Mar 2026</div>
+        <div class="cert-view">↗ View Certificate</div>
+      </a>
+      <a class="cert-card" href="https://drive.google.com/file/d/1uExg-5mKkQLMd7zDLDxTe25mUQxYF7Mx/view?usp=sharing"
+        target="_blank">
+        <div class="cert-issuer">Hacker School · Cartel Software</div>
+        <div class="cert-name">Ethical Hacking Training (CEH Curriculum)</div>
+        <div class="cert-date">Dec 2025 — Jan 2026</div>
+        <div class="cert-view">↗ View Certificate</div>
+      </a>
+      <a class="cert-card" href="https://drive.google.com/file/d/1qPnVlJ4MBTbnMLVGUDn8GhITlwfP20YP/view?usp=drive_link"
+        target="_blank">
+        <div class="cert-issuer">Zoom Technologies</div>
+        <div class="cert-name">CCNA (200-301) + Cisco Security Training</div>
+        <div class="cert-date">Oct 15 — Nov 14, 2025</div>
+        <div class="cert-id">REF: ZTR000281</div>
+        <div class="cert-view">↗ View Certificate</div>
+      </a>
+      <a class="cert-card" href="https://drive.google.com/file/d/1oSfSay73JmWPncKtmmg04mOnntrJry0M/view?usp=sharing"
+        target="_blank">
+        <div class="cert-issuer">Zoom Technologies</div>
+        <div class="cert-name">Advanced Linux Training</div>
+        <div class="cert-date">Nov 15 — Nov 28, 2025</div>
+        <div class="cert-id">REF: ZTR000339</div>
+        <div class="cert-view">↗ View Certificate</div>
+      </a>
+      <a class="cert-card" href="https://drive.google.com/file/d/1sJgIge90Hp6z-aXIvn2nykYtf1cc4u5a/view?usp=sharing"
+        target="_blank">
+        <div class="cert-issuer">Zoom Technologies</div>
+        <div class="cert-name">Linux Administration Training</div>
+        <div class="cert-date">Oct 30 — Nov 12, 2025</div>
+        <div class="cert-id">REF: ZTR000339</div>
+        <div class="cert-view">↗ View Certificate</div>
+      </a>
+      <div class="cert-card" style="border-style: dashed; opacity: 0.6; cursor: default;">
+        <div class="cert-issuer">Hackers School Institute · Bangalore</div>
+        <div class="cert-name">CPENT — Certified Penetration Testing Professional</div>
+        <div class="cert-date" style="color: var(--green);">In Progress ●</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-tag">06 — Contact</div>
+    <div class="contact-wrap reveal">
+      <div class="contact-intro">Let's <span>connect.</span></div>
+      <div class="contact-sub">Open to SOC Analyst and Penetration Tester roles in Visakhapatnam, Hyderabad, and
+        Bangalore. Also open to remote opportunities and cybersecurity collaborations.</div>
+
+      <div class="contact-section-label">// Professional</div>
+      <div class="contact-grid">
+        <a href="mailto:sudheerprasannakumarv@gmail.com" class="contact-link">
+          <span class="contact-link-icon">@</span> sudheerprasannakumarv@gmail.com
+        </a>
+        <a href="https://www.linkedin.com/in/sudheerprasannakumarvasetty" target="_blank" class="contact-link">
+          <span class="contact-link-icon">in</span> LinkedIn — Sudheer Prasanna Kumar
+        </a>
+        <a href="https://github.com/sudheerprasannakumarvasetty" target="_blank" class="contact-link">
+          <span class="contact-link-icon">⌥</span> GitHub — sudheerprasannakumarvasetty
+        </a>
+        <a href="https://x.com/SudheerVasetty" target="_blank" class="contact-link">
+          <span class="contact-link-icon">✕</span> X — @SudheerVasetty
+        </a>
+        <a href="https://www.instagram.com/sudheerv_/" target="_blank" class="contact-link">
+          <span class="contact-link-icon">◈</span> Instagram — @sudheerv_
+        </a>
+      </div>
+
+      <div class="contact-section-label">// ThreatFlash</div>
+      <div class="contact-grid">
+        <a href="https://www.youtube.com/@ThreatFlash" target="_blank" class="contact-link">
+          <span class="contact-link-icon">▶</span> YouTube @ThreatFlash
+        </a>
+        <a href="https://www.instagram.com/threatflash" target="_blank" class="contact-link">
+          <span class="contact-link-icon">◈</span> Instagram @threatflash
+        </a>
+        <a href="https://x.com/threatflash" target="_blank" class="contact-link">
+          <span class="contact-link-icon">✕</span> X @threatflash
+        </a>
+      </div>
+
+      <div class="contact-section-label">// sudheer.photography</div>
+      <div class="contact-grid">
+        <a href="https://www.instagram.com/sudheer.photography/" target="_blank" class="contact-link">
+          <span class="contact-link-icon">◈</span> Instagram @sudheer.photography
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-text">© 2026 <span>Sudheer Prasanna Kumar Vasetty</span></div>
+    <div class="footer-text">Visakhapatnam, India · <span>Open to Work</span></div>
+  </footer>
+
+  <script>
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx - 4 + 'px';
+      cursor.style.top = my - 4 + 'px';
+    });
+    function animRing() {
+      rx += (mx - rx - 14) * 0.15;
+      ry += (my - ry - 14) * 0.15;
+      ring.style.left = rx + 'px';
+      ring.style.top = ry + 'px';
+      requestAnimationFrame(animRing);
+    }
+    animRing();
+    const reveals = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    reveals.forEach(r => obs.observe(r));
+  </script>
+</body>
+
+</html>

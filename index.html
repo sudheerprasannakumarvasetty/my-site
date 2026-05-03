@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <title>Sudheer Prasanna Kumar Vasetty — Cybersecurity</title>
   <link
     href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;500;600;700;800&display=swap"
@@ -20,9 +20,16 @@
       --text-mid: #A0ADB8;
       --mono: 'Share Tech Mono', monospace;
       --sans: 'Syne', sans-serif;
+      --nav-h: 56px;
+      /* fluid spacing */
+      --px: clamp(1rem, 5vw, 3rem);
+      --section-pt: clamp(80px, 12vw, 130px);
+      --section-pb: clamp(60px, 8vw, 100px);
     }
 
-    * {
+    *,
+    *::before,
+    *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
@@ -30,6 +37,7 @@
 
     html {
       scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
     }
 
     body {
@@ -37,91 +45,105 @@
       color: var(--text);
       font-family: var(--sans);
       overflow-x: hidden;
+      width: 100%;
+    }
+
+    img,
+    svg {
+      max-width: 100%;
+      display: block;
     }
 
     /* SCANLINE */
     body::before {
       content: '';
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.03) 2px, rgba(0, 0, 0, 0.03) 4px);
+      inset: 0;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.025) 2px, rgba(0, 0, 0, 0.025) 4px);
       pointer-events: none;
-      z-index: 100;
+      z-index: 999;
     }
 
-    /* NAV */
+    /* ── NAV ── */
     nav {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
-      z-index: 50;
+      z-index: 200;
+      height: var(--nav-h);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1rem 1.5rem;
-      background: rgba(8, 11, 15, 0.92);
-      backdrop-filter: blur(12px);
+      padding: 0 var(--px);
+      background: rgba(8, 11, 15, 0.94);
+      backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
     }
 
     .nav-logo {
       font-family: var(--mono);
-      font-size: 13px;
+      font-size: clamp(11px, 2vw, 13px);
       color: var(--green);
-      letter-spacing: 0.05em;
+      letter-spacing: .05em;
+      white-space: nowrap;
     }
 
     .nav-links {
       display: flex;
-      gap: 1.25rem;
+      gap: clamp(1rem, 3vw, 2rem);
     }
 
     .nav-links a {
       font-family: var(--mono);
-      font-size: 11px;
+      font-size: clamp(10px, 1.5vw, 12px);
       color: var(--text-dim);
       text-decoration: none;
-      letter-spacing: 0.06em;
-      transition: color 0.2s;
+      letter-spacing: .07em;
+      transition: color .2s;
+      white-space: nowrap;
     }
 
     .nav-links a:hover {
       color: var(--green);
     }
 
-    /* hamburger for mobile */
     .hamburger {
       display: none;
       flex-direction: column;
+      justify-content: center;
       gap: 5px;
       cursor: pointer;
-      padding: 4px;
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
     }
 
     .hamburger span {
       width: 22px;
       height: 2px;
       background: var(--text-dim);
-      transition: all 0.3s;
+      border-radius: 1px;
+      transition: all .3s;
       display: block;
     }
 
     .mobile-menu {
       display: none;
       position: fixed;
-      top: 57px;
+      top: var(--nav-h);
       left: 0;
       right: 0;
-      background: rgba(8, 11, 15, 0.98);
+      background: rgba(8, 11, 15, .98);
       border-bottom: 1px solid var(--border);
-      padding: 1.5rem;
-      z-index: 49;
+      padding: 1.25rem var(--px);
+      z-index: 199;
       flex-direction: column;
-      gap: 1rem;
+      gap: .85rem;
+    }
+
+    .mobile-menu.open {
+      display: flex;
     }
 
     .mobile-menu a {
@@ -129,33 +151,34 @@
       font-size: 13px;
       color: var(--text-mid);
       text-decoration: none;
-      letter-spacing: 0.1em;
-      padding: 0.5rem 0;
+      letter-spacing: .1em;
+      padding: .5rem 0;
       border-bottom: 1px solid var(--border);
     }
 
     .mobile-menu a:last-child {
-      border-bottom: none;
+      border: none;
     }
 
-    .mobile-menu.open {
-      display: flex;
-    }
-
-    /* SECTIONS */
-    section {
-      padding: 100px 1.5rem 60px;
+    /* ── SECTIONS ── */
+    .section-wrap {
+      width: 100%;
       max-width: 1100px;
       margin: 0 auto;
+      padding: var(--section-pt) var(--px) var(--section-pb);
+    }
+
+    .section-wrap.short {
+      min-height: auto;
     }
 
     .section-tag {
       font-family: var(--mono);
-      font-size: 10px;
+      font-size: clamp(9px, 1.5vw, 11px);
       color: var(--green);
-      letter-spacing: 0.2em;
+      letter-spacing: .18em;
       text-transform: uppercase;
-      margin-bottom: 0.6rem;
+      margin-bottom: .6rem;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -166,22 +189,28 @@
       width: 20px;
       height: 1px;
       background: var(--green);
+      flex-shrink: 0;
     }
 
     h2 {
-      font-size: clamp(1.6rem, 5vw, 2.75rem);
+      font-size: clamp(1.5rem, 4vw, 2.75rem);
       font-weight: 800;
-      letter-spacing: -0.02em;
+      letter-spacing: -.02em;
       line-height: 1.1;
     }
 
-    /* HERO */
+    /* ── HERO ── */
     #hero {
-      min-height: 100vh;
+      min-height: 100svh;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding-top: 120px;
+      padding-top: calc(var(--nav-h) + clamp(2rem, 5vw, 4rem));
+      padding-bottom: clamp(3rem, 6vw, 5rem);
+      padding-left: var(--px);
+      padding-right: var(--px);
+      max-width: 1100px;
+      margin: 0 auto;
       position: relative;
     }
 
@@ -189,53 +218,54 @@
       content: '';
       position: absolute;
       top: 0;
-      right: -60px;
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(0, 255, 140, 0.04) 0%, transparent 70%);
+      right: 0;
+      width: min(500px, 60vw);
+      height: min(500px, 60vw);
+      background: radial-gradient(circle, rgba(0, 255, 140, .04) 0%, transparent 70%);
       pointer-events: none;
     }
 
     .hero-eyebrow {
       font-family: var(--mono);
-      font-size: 12px;
+      font-size: clamp(10px, 2vw, 13px);
       color: var(--green);
-      letter-spacing: 0.12em;
-      margin-bottom: 1.25rem;
+      letter-spacing: .12em;
+      margin-bottom: clamp(.75rem, 2vw, 1.5rem);
       opacity: 0;
-      animation: fadeUp 0.6s 0.2s forwards;
+      animation: fadeUp .6s .2s forwards;
     }
 
     .hero-name {
-      font-size: clamp(2rem, 7vw, 5rem);
+      font-size: clamp(1.8rem, 6vw, 5rem);
       font-weight: 800;
-      line-height: 1;
-      letter-spacing: -0.02em;
-      margin-bottom: 0.15rem;
+      line-height: 1.05;
+      letter-spacing: -.02em;
+      margin-bottom: .15rem;
       opacity: 0;
-      animation: fadeUp 0.6s 0.4s forwards;
+      animation: fadeUp .6s .4s forwards;
+      word-break: break-word;
     }
 
     .hero-lastname {
-      font-size: clamp(2rem, 7vw, 5rem);
+      font-size: clamp(1.8rem, 6vw, 5rem);
       font-weight: 800;
-      line-height: 1;
-      letter-spacing: -0.02em;
-      margin-bottom: 1.25rem;
+      line-height: 1.05;
+      letter-spacing: -.02em;
+      margin-bottom: clamp(1rem, 3vw, 1.5rem);
       color: var(--green);
       opacity: 0;
-      animation: fadeUp 0.6s 0.5s forwards;
+      animation: fadeUp .6s .5s forwards;
     }
 
     .hero-role {
       font-family: var(--mono);
-      font-size: 13px;
+      font-size: clamp(11px, 1.8vw, 14px);
       color: var(--text-mid);
-      margin-bottom: 2rem;
+      margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
       opacity: 0;
-      animation: fadeUp 0.6s 0.6s forwards;
-      max-width: 480px;
-      line-height: 1.8;
+      animation: fadeUp .6s .6s forwards;
+      max-width: min(480px, 100%);
+      line-height: 1.85;
     }
 
     .hero-role span {
@@ -244,24 +274,25 @@
 
     .hero-btns {
       display: flex;
-      gap: 0.75rem;
       flex-wrap: wrap;
+      gap: .65rem;
       opacity: 0;
-      animation: fadeUp 0.6s 0.8s forwards;
+      animation: fadeUp .6s .8s forwards;
     }
 
     .btn-primary {
       font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      padding: 11px 22px;
+      font-size: clamp(10px, 1.5vw, 12px);
+      letter-spacing: .1em;
+      padding: clamp(10px, 2vw, 13px) clamp(16px, 3vw, 26px);
       background: var(--green);
       color: #000;
-      border: none;
-      font-weight: 600;
-      transition: all 0.2s;
+      font-weight: 700;
       text-decoration: none;
       display: inline-block;
+      transition: all .2s;
+      border: none;
+      white-space: nowrap;
     }
 
     .btn-primary:hover {
@@ -271,15 +302,16 @@
 
     .btn-ghost {
       font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      padding: 10px 22px;
+      font-size: clamp(10px, 1.5vw, 12px);
+      letter-spacing: .1em;
+      padding: clamp(9px, 2vw, 12px) clamp(16px, 3vw, 26px);
       background: transparent;
       color: var(--green);
       border: 1px solid var(--border);
-      transition: all 0.2s;
       text-decoration: none;
       display: inline-block;
+      transition: all .2s;
+      white-space: nowrap;
     }
 
     .btn-ghost:hover {
@@ -289,15 +321,16 @@
 
     .btn-resume {
       font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      padding: 10px 22px;
+      font-size: clamp(10px, 1.5vw, 12px);
+      letter-spacing: .1em;
+      padding: clamp(9px, 2vw, 12px) clamp(16px, 3vw, 26px);
       background: transparent;
       color: var(--text-mid);
       border: 1px solid var(--border);
-      transition: all 0.2s;
       text-decoration: none;
       display: inline-block;
+      transition: all .2s;
+      white-space: nowrap;
     }
 
     .btn-resume:hover {
@@ -307,17 +340,17 @@
 
     .hero-stats {
       display: flex;
-      gap: 2rem;
       flex-wrap: wrap;
-      margin-top: 3rem;
-      padding-top: 2.5rem;
+      gap: clamp(1.25rem, 4vw, 3rem);
+      margin-top: clamp(2rem, 5vw, 4rem);
+      padding-top: clamp(1.5rem, 3vw, 3rem);
       border-top: 1px solid var(--border);
       opacity: 0;
-      animation: fadeUp 0.6s 1s forwards;
+      animation: fadeUp .6s 1s forwards;
     }
 
     .stat-num {
-      font-size: 1.75rem;
+      font-size: clamp(1.3rem, 3.5vw, 2rem);
       font-weight: 800;
       color: var(--green);
       line-height: 1;
@@ -326,27 +359,22 @@
 
     .stat-label {
       font-family: var(--mono);
-      font-size: 10px;
+      font-size: clamp(9px, 1.2vw, 11px);
       color: var(--text-dim);
-      letter-spacing: 0.1em;
+      letter-spacing: .1em;
     }
 
-    /* ABOUT */
-    #about {
-      min-height: auto;
-      padding-bottom: 80px;
-    }
-
+    /* ── ABOUT ── */
     .about-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
+      grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+      gap: clamp(1.5rem, 4vw, 3.5rem);
       align-items: start;
-      margin-top: 2rem;
+      margin-top: clamp(1.5rem, 3vw, 2.5rem);
     }
 
     .about-text {
-      font-size: 14px;
+      font-size: clamp(13px, 1.8vw, 15px);
       color: var(--text-mid);
       line-height: 1.9;
     }
@@ -363,76 +391,74 @@
     .about-card {
       background: var(--bg3);
       border: 1px solid var(--border);
-      padding: 1.5rem;
+      padding: clamp(1.1rem, 3vw, 1.75rem);
     }
 
     .about-card-title {
       font-family: var(--mono);
-      font-size: 10px;
+      font-size: clamp(9px, 1.2vw, 11px);
       color: var(--green);
-      letter-spacing: 0.15em;
+      letter-spacing: .15em;
       margin-bottom: 1rem;
     }
 
     .info-row {
       display: flex;
       justify-content: space-between;
-      gap: 10px;
-      padding: 0.55rem 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      align-items: flex-start;
+      gap: 8px;
+      padding: .5rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, .04);
     }
 
     .info-row:last-child {
-      border-bottom: none;
+      border: none;
     }
 
     .info-key {
-      color: var(--text-dim);
       font-family: var(--mono);
-      font-size: 10px;
+      font-size: clamp(9px, 1.2vw, 10px);
+      color: var(--text-dim);
       flex-shrink: 0;
+      padding-top: 2px;
     }
 
     .info-val {
+      font-size: clamp(10px, 1.4vw, 12px);
       color: var(--text);
       font-weight: 500;
-      font-size: 11px;
       text-align: right;
+      word-break: break-word;
     }
 
     .info-val.green {
       color: var(--green);
     }
 
-    /* SKILLS */
-    #skills {
-      min-height: auto;
-      padding-bottom: 80px;
-    }
-
+    /* ── SKILLS ── */
     .skills-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.25rem;
-      margin-top: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+      gap: clamp(1rem, 2vw, 1.5rem);
+      margin-top: clamp(1.5rem, 3vw, 2.5rem);
     }
 
     .skill-group {
       background: var(--bg3);
       border: 1px solid var(--border);
-      padding: 1.25rem;
-      transition: border-color 0.2s;
+      padding: clamp(1rem, 2vw, 1.5rem);
+      transition: border-color .2s;
     }
 
     .skill-group:hover {
-      border-color: rgba(0, 255, 140, 0.3);
+      border-color: rgba(0, 255, 140, .3);
     }
 
     .skill-group-title {
       font-family: var(--mono);
-      font-size: 10px;
+      font-size: clamp(9px, 1.2vw, 11px);
       color: var(--green);
-      letter-spacing: 0.15em;
+      letter-spacing: .15em;
       margin-bottom: 1rem;
       display: flex;
       align-items: center;
@@ -454,11 +480,11 @@
 
     .skill-tag {
       font-family: var(--mono);
-      font-size: 10px;
+      font-size: clamp(9px, 1.2vw, 11px);
       color: var(--text-mid);
       padding: 4px 9px;
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      transition: all 0.2s;
+      border: 1px solid rgba(255, 255, 255, .06);
+      transition: all .2s;
     }
 
     .skill-tag:hover {
@@ -467,14 +493,9 @@
       background: var(--green-glow);
     }
 
-    /* EXPERIENCE */
-    #experience {
-      min-height: auto;
-      padding-bottom: 80px;
-    }
-
+    /* ── TIMELINE ── */
     .timeline {
-      margin-top: 2rem;
+      margin-top: clamp(1.5rem, 3vw, 2.5rem);
       position: relative;
     }
 
@@ -489,8 +510,8 @@
     }
 
     .timeline-item {
-      padding-left: 2rem;
-      padding-bottom: 2.5rem;
+      padding-left: clamp(1.5rem, 4vw, 2.5rem);
+      padding-bottom: clamp(2rem, 4vw, 3rem);
       position: relative;
     }
 
@@ -503,7 +524,7 @@
       height: 9px;
       background: var(--green);
       border-radius: 50%;
-      box-shadow: 0 0 12px var(--green);
+      box-shadow: 0 0 10px var(--green);
     }
 
     .timeline-item.ongoing::before {
@@ -512,14 +533,14 @@
 
     .tl-date {
       font-family: var(--mono);
-      font-size: 10px;
+      font-size: clamp(9px, 1.2vw, 11px);
       color: var(--green);
-      letter-spacing: 0.1em;
-      margin-bottom: 0.4rem;
+      letter-spacing: .08em;
+      margin-bottom: .35rem;
     }
 
     .tl-role {
-      font-size: 16px;
+      font-size: clamp(14px, 2.5vw, 18px);
       font-weight: 700;
       color: var(--text);
       margin-bottom: 3px;
@@ -527,13 +548,13 @@
 
     .tl-org {
       font-family: var(--mono);
-      font-size: 11px;
+      font-size: clamp(10px, 1.5vw, 12px);
       color: var(--text-dim);
-      margin-bottom: 0.75rem;
+      margin-bottom: .75rem;
     }
 
     .tl-desc {
-      font-size: 13px;
+      font-size: clamp(12px, 1.6vw, 14px);
       color: var(--text-mid);
       line-height: 1.8;
     }
@@ -542,12 +563,12 @@
       display: flex;
       flex-wrap: wrap;
       gap: 5px;
-      margin-top: 0.75rem;
+      margin-top: .75rem;
     }
 
     .tl-tag {
       font-family: var(--mono);
-      font-size: 10px;
+      font-size: clamp(9px, 1.1vw, 10px);
       padding: 3px 8px;
       border: 1px solid var(--border);
       color: var(--text-dim);
@@ -558,25 +579,20 @@
       font-family: var(--mono);
       font-size: 10px;
       padding: 2px 7px;
-      background: rgba(0, 255, 140, 0.1);
+      background: rgba(0, 255, 140, .1);
       color: var(--green);
-      border: 1px solid rgba(0, 255, 140, 0.25);
+      border: 1px solid rgba(0, 255, 140, .25);
       margin-left: 8px;
       vertical-align: middle;
       animation: pulse-border 2s infinite;
     }
 
-    /* THREATFLASH */
-    #threatflash {
-      min-height: auto;
-      padding-bottom: 80px;
-    }
-
+    /* ── THREATFLASH ── */
     .tf-hero {
       background: var(--bg3);
       border: 1px solid var(--border);
-      padding: 2rem;
-      margin-top: 2rem;
+      padding: clamp(1.5rem, 4vw, 3rem);
+      margin-top: clamp(1.5rem, 3vw, 2.5rem);
       position: relative;
       overflow: hidden;
     }
@@ -584,20 +600,20 @@
     .tf-hero::before {
       content: 'TF';
       position: absolute;
-      right: -20px;
+      right: -10px;
       top: -30px;
-      font-size: 150px;
+      font-size: clamp(80px, 15vw, 180px);
       font-weight: 800;
-      color: rgba(0, 255, 140, 0.03);
+      color: rgba(0, 255, 140, .03);
       line-height: 1;
       pointer-events: none;
     }
 
     .tf-logo {
-      font-size: 2rem;
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
       font-weight: 800;
-      letter-spacing: -0.02em;
-      margin-bottom: 0.4rem;
+      letter-spacing: -.02em;
+      margin-bottom: .4rem;
     }
 
     .tf-logo span {
@@ -606,56 +622,56 @@
 
     .tf-tagline {
       font-family: var(--mono);
-      font-size: 11px;
+      font-size: clamp(10px, 1.5vw, 13px);
       color: var(--text-dim);
       margin-bottom: 1.25rem;
-      letter-spacing: 0.05em;
+      letter-spacing: .04em;
     }
 
     .tf-desc {
-      font-size: 14px;
+      font-size: clamp(13px, 1.8vw, 15px);
       color: var(--text-mid);
-      line-height: 1.8;
+      line-height: 1.85;
       margin-bottom: 1.5rem;
     }
 
     .tf-stats {
       display: flex;
-      gap: 1.5rem;
       flex-wrap: wrap;
-      padding: 1.25rem 0;
+      gap: clamp(1rem, 3vw, 2.5rem);
+      padding: clamp(1rem, 2vw, 1.5rem) 0;
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
       margin-bottom: 1.5rem;
     }
 
     .tf-stat-num {
-      font-size: 1.5rem;
+      font-size: clamp(1.25rem, 3vw, 1.75rem);
       font-weight: 800;
       color: var(--green);
     }
 
     .tf-stat-label {
       font-family: var(--mono);
-      font-size: 10px;
+      font-size: clamp(9px, 1.1vw, 10px);
       color: var(--text-dim);
-      letter-spacing: 0.1em;
+      letter-spacing: .1em;
       margin-top: 2px;
     }
 
     .tf-platforms {
       display: flex;
-      gap: 8px;
       flex-wrap: wrap;
+      gap: 8px;
     }
 
     .tf-platform {
       font-family: var(--mono);
-      font-size: 11px;
-      padding: 6px 12px;
+      font-size: clamp(10px, 1.4vw, 12px);
+      padding: clamp(5px, 1vw, 7px) clamp(10px, 2vw, 14px);
       border: 1px solid var(--border);
       color: var(--text-mid);
-      transition: all 0.2s;
+      transition: all .2s;
       text-decoration: none;
       display: inline-block;
     }
@@ -665,24 +681,19 @@
       color: var(--green);
     }
 
-    /* CERTS */
-    #certifications {
-      min-height: auto;
-      padding-bottom: 80px;
-    }
-
+    /* ── CERTS ── */
     .certs-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1rem;
-      margin-top: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+      gap: clamp(.75rem, 2vw, 1rem);
+      margin-top: clamp(1.5rem, 3vw, 2.5rem);
     }
 
     .cert-card {
       background: var(--bg3);
       border: 1px solid var(--border);
-      padding: 1.25rem;
-      transition: all 0.2s;
+      padding: clamp(1rem, 2vw, 1.5rem);
+      transition: all .2s;
       position: relative;
       overflow: hidden;
       text-decoration: none;
@@ -698,72 +709,63 @@
       height: 2px;
       background: var(--green);
       transform: scaleX(0);
-      transition: transform 0.3s;
+      transition: transform .3s;
       transform-origin: left;
     }
 
-    .cert-card:hover {
-      border-color: rgba(0, 255, 140, 0.35);
+    .cert-card:hover,
+    .cert-card:active {
+      border-color: rgba(0, 255, 140, .35);
     }
 
-    .cert-card:hover::after {
+    .cert-card:hover::after,
+    .cert-card:active::after {
       transform: scaleX(1);
     }
 
     .cert-issuer {
       font-family: var(--mono);
-      font-size: 10px;
+      font-size: clamp(9px, 1.1vw, 10px);
       color: var(--green);
-      letter-spacing: 0.12em;
-      margin-bottom: 0.5rem;
+      letter-spacing: .12em;
+      margin-bottom: .5rem;
     }
 
     .cert-name {
-      font-size: 13px;
+      font-size: clamp(12px, 1.6vw, 14px);
       font-weight: 600;
       color: var(--text);
-      margin-bottom: 0.4rem;
+      margin-bottom: .4rem;
       line-height: 1.4;
     }
 
     .cert-date {
       font-family: var(--mono);
-      font-size: 11px;
+      font-size: clamp(10px, 1.2vw, 11px);
       color: var(--text-dim);
     }
 
     .cert-id {
       font-family: var(--mono);
-      font-size: 10px;
-      color: rgba(0, 255, 140, 0.4);
+      font-size: clamp(9px, 1.1vw, 10px);
+      color: rgba(0, 255, 140, .4);
       margin-top: 6px;
     }
 
     .cert-view {
       font-family: var(--mono);
-      font-size: 10px;
+      font-size: clamp(9px, 1.1vw, 10px);
       color: var(--green);
       margin-top: 8px;
-      opacity: 0;
-      transition: opacity 0.2s;
     }
 
-    .cert-card:hover .cert-view {
-      opacity: 1;
-    }
-
-    /* CONTACT */
-    #contact {
-      min-height: auto;
-      padding-bottom: 80px;
-    }
-
+    /* ── CONTACT ── */
     .contact-intro {
-      font-size: clamp(1.5rem, 5vw, 2rem);
+      font-size: clamp(1.4rem, 4vw, 2rem);
       font-weight: 800;
       line-height: 1.2;
       margin-bottom: 1rem;
-      margin-top: 2rem;
+      margin-top: clamp(1.5rem, 3vw, 2.5rem);
     }
 
     .contact-intro span {
@@ -771,18 +773,17 @@
     }
 
     .contact-sub {
-      font-size: 14px;
+      font-size: clamp(12px, 1.6vw, 14px);
       color: var(--text-mid);
       line-height: 1.8;
       margin-bottom: 2rem;
-      max-width: 540px;
     }
 
     .contact-section-label {
       font-family: var(--mono);
-      font-size: 10px;
+      font-size: clamp(9px, 1.1vw, 10px);
       color: var(--text-dim);
-      letter-spacing: 0.15em;
+      letter-spacing: .15em;
       text-transform: uppercase;
       margin-bottom: 8px;
       margin-top: 1.75rem;
@@ -790,7 +791,7 @@
 
     .contact-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
       gap: 8px;
     }
 
@@ -799,16 +800,17 @@
       align-items: center;
       gap: 10px;
       font-family: var(--mono);
-      font-size: 11px;
+      font-size: clamp(10px, 1.4vw, 12px);
       color: var(--text-mid);
       text-decoration: none;
-      padding: 12px 14px;
+      padding: clamp(10px, 1.5vw, 14px) clamp(12px, 2vw, 18px);
       border: 1px solid var(--border);
-      transition: all 0.2s;
-      word-break: break-all;
+      transition: all .2s;
+      overflow: hidden;
     }
 
-    .contact-link:hover {
+    .contact-link:hover,
+    .contact-link:active {
       border-color: var(--green);
       color: var(--green);
       background: var(--green-glow);
@@ -820,33 +822,41 @@
       flex-shrink: 0;
     }
 
-    /* FOOTER */
+    .contact-link-text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* ── FOOTER ── */
     footer {
       border-top: 1px solid var(--border);
-      padding: 1.5rem;
+      padding: clamp(1.25rem, 3vw, 2rem) var(--px);
       display: flex;
-      flex-direction: column;
-      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: .5rem;
       max-width: 1100px;
       margin: 0 auto;
     }
 
     .footer-text {
       font-family: var(--mono);
-      font-size: 10px;
+      font-size: clamp(9px, 1.1vw, 11px);
       color: var(--text-dim);
-      letter-spacing: 0.06em;
+      letter-spacing: .06em;
     }
 
     .footer-text span {
       color: var(--green);
     }
 
-    /* REVEAL */
+    /* ── REVEAL ── */
     .reveal {
       opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.5s ease;
+      transform: translateY(18px);
+      transition: opacity .5s ease, transform .5s ease;
     }
 
     .reveal.visible {
@@ -854,11 +864,11 @@
       transform: translateY(0);
     }
 
-    /* ANIMATIONS */
+    /* ── ANIMATIONS ── */
     @keyframes fadeUp {
       from {
         opacity: 0;
-        transform: translateY(20px)
+        transform: translateY(18px)
       }
 
       to {
@@ -883,11 +893,11 @@
 
       0%,
       100% {
-        border-color: rgba(0, 255, 140, 0.25)
+        border-color: rgba(0, 255, 140, .25)
       }
 
       50% {
-        border-color: rgba(0, 255, 140, 0.6)
+        border-color: rgba(0, 255, 140, .6)
       }
     }
 
@@ -907,10 +917,10 @@
       animation: blink 1s step-end infinite;
     }
 
-    /* ===================== MOBILE ===================== */
-    @media (max-width: 768px) {
+    /* ── BREAKPOINTS ── */
 
-      /* Nav */
+    /* Tablet portrait ~768px */
+    @media(max-width:768px) {
       .nav-links {
         display: none;
       }
@@ -919,28 +929,32 @@
         display: flex;
       }
 
-      /* Hero */
-      #hero {
-        padding-top: 100px;
-        min-height: 100svh;
+      .about-grid {
+        grid-template-columns: 1fr;
       }
 
-      .hero-name {
-        font-size: clamp(2rem, 10vw, 3rem);
+      .skills-grid {
+        grid-template-columns: 1fr 1fr;
       }
 
-      .hero-lastname {
-        font-size: clamp(2rem, 10vw, 3rem);
+      .cert-view {
+        opacity: 1;
       }
 
-      .hero-role {
-        font-size: 12px;
+      footer {
+        justify-content: center;
+        text-align: center;
+      }
+    }
+
+    /* Large phone ~600px */
+    @media(max-width:600px) {
+      .skills-grid {
+        grid-template-columns: 1fr;
       }
 
       .hero-btns {
         flex-direction: column;
-        align-items: flex-start;
-        gap: 0.6rem;
       }
 
       .btn-primary,
@@ -948,98 +962,102 @@
       .btn-resume {
         width: 100%;
         text-align: center;
-        padding: 13px 20px;
       }
 
-      .hero-stats {
-        gap: 1.25rem;
-        flex-wrap: wrap;
-      }
-
-      .stat-num {
-        font-size: 1.4rem;
-      }
-
-      /* About — stack on mobile */
-      .about-grid {
-        grid-template-columns: 1fr;
-        gap: 1.75rem;
-      }
-
-      /* Skills — 1 col on small screens */
-      .skills-grid {
-        grid-template-columns: 1fr;
-      }
-
-      /* Timeline */
-      .tl-role {
-        font-size: 15px;
-      }
-
-      /* Certs — 1 col */
       .certs-grid {
         grid-template-columns: 1fr;
       }
 
-      .cert-view {
-        opacity: 1;
-      }
-
-      /* always show on mobile since no hover */
-
-      /* Contact */
       .contact-grid {
         grid-template-columns: 1fr;
       }
 
-      .contact-link {
-        font-size: 11px;
-        word-break: break-all;
-      }
-
-      /* Footer */
-      footer {
-        text-align: center;
-        align-items: center;
-      }
-
-      /* Sections padding */
-      section {
-        padding: 90px 1.25rem 60px;
+      .tf-stats {
+        gap: .85rem;
       }
     }
 
-    @media (max-width: 420px) {
-      .hero-name {
-        font-size: 1.85rem;
+    /* Small phone ~380px */
+    @media(max-width:380px) {
+      :root {
+        --px: 1rem;
       }
 
+      .hero-name,
       .hero-lastname {
-        font-size: 1.85rem;
+        font-size: 1.6rem;
       }
 
-      .hero-eyebrow {
-        font-size: 10px;
+      .hero-role {
+        font-size: 11px;
       }
 
-      .tf-hero {
-        padding: 1.5rem;
-      }
-
-      .tf-hero::before {
-        font-size: 100px;
-      }
-
-      .tf-stats {
-        gap: 1rem;
-      }
-
-      .tf-stat-num {
+      .stat-num {
         font-size: 1.2rem;
       }
 
       h2 {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
+      }
+
+      .tf-logo {
+        font-size: 1.4rem;
+      }
+
+      .contact-intro {
+        font-size: 1.3rem;
+      }
+
+      .hero-stats {
+        gap: 1rem;
+      }
+    }
+
+    /* Very small ~320px */
+    @media(max-width:320px) {
+
+      .hero-name,
+      .hero-lastname {
+        font-size: 1.4rem;
+      }
+
+      .hero-stats {
+        flex-direction: column;
+        gap: .75rem;
+      }
+
+      .tf-stats {
+        flex-direction: column;
+        gap: .75rem;
+      }
+    }
+
+    /* Landscape phone */
+    @media(max-height:500px) and (orientation:landscape) {
+      #hero {
+        min-height: auto;
+        padding-top: calc(var(--nav-h) + 1rem);
+        padding-bottom: 2rem;
+      }
+
+      .hero-name,
+      .hero-lastname {
+        font-size: clamp(1.4rem, 5vw, 2.5rem);
+      }
+    }
+
+    /* Large desktop 1400px+ */
+    @media(min-width:1400px) {
+      :root {
+        --px: 4rem;
+      }
+
+      .section-wrap {
+        max-width: 1200px;
+      }
+
+      #hero {
+        max-width: 1200px;
       }
     }
   </style>
@@ -1058,17 +1076,17 @@
       <a href="#certifications">certs</a>
       <a href="#contact">contact</a>
     </div>
-    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <div class="hamburger" id="ham" onclick="toggleMenu()">
       <span></span><span></span><span></span>
     </div>
   </nav>
   <div class="mobile-menu" id="mobileMenu">
-    <a href="#about" onclick="toggleMenu()">about</a>
-    <a href="#skills" onclick="toggleMenu()">skills</a>
-    <a href="#experience" onclick="toggleMenu()">experience</a>
-    <a href="#threatflash" onclick="toggleMenu()">threatflash</a>
-    <a href="#certifications" onclick="toggleMenu()">certs</a>
-    <a href="#contact" onclick="toggleMenu()">contact</a>
+    <a href="#about" onclick="closeMenu()">about</a>
+    <a href="#skills" onclick="closeMenu()">skills</a>
+    <a href="#experience" onclick="closeMenu()">experience</a>
+    <a href="#threatflash" onclick="closeMenu()">threatflash</a>
+    <a href="#certifications" onclick="closeMenu()">certs</a>
+    <a href="#contact" onclick="closeMenu()">contact</a>
   </div>
 
   <!-- HERO -->
@@ -1076,7 +1094,7 @@
     <h1 class="hero-name">Sudheer Prasanna Kumar</h1>
     <div class="hero-lastname">Vasetty.</div>
     <div class="hero-role">
-      SOC Analyst & Pentester in the making —<br>
+      SOC Analyst &amp; Pentester in the making —<br>
       <span>Founder @ThreatFlash</span> · CEH · CSA · CCNA · Linux · <span>CPENT ongoing</span>
     </div>
     <div class="hero-btns">
@@ -1089,11 +1107,11 @@
     <div class="hero-stats">
       <div>
         <div class="stat-num">16+</div>
-        <div class="stat-label">ThreatFlash Episodes</div>
+        <div class="stat-label">Episodes</div>
       </div>
       <div>
         <div class="stat-num">5</div>
-        <div class="stat-label">Training Certs</div>
+        <div class="stat-label">Certs</div>
       </div>
       <div>
         <div class="stat-num">4</div>
@@ -1107,7 +1125,7 @@
   </section>
 
   <!-- ABOUT -->
-  <section id="about">
+  <div class="section-wrap short" id="about">
     <div class="section-tag">01 — About</div>
     <h2 class="reveal">Who I am</h2>
     <div class="about-grid reveal">
@@ -1117,8 +1135,8 @@
         <p>No shortcuts. Months of hands-on training in ethical hacking, SOC analysis, CCNA networking, and Linux — now
           advancing into penetration testing with <strong>CPENT at Hackers School, Bangalore.</strong></p>
         <p>While learning, I noticed most people don't understand what's happening when a cyberattack makes the news. So
-          I built <strong>ThreatFlash</strong> — daily 60-second breakdowns of real cyberattacks across YouTube,
-          Instagram, LinkedIn, and X.</p>
+          I built <strong>ThreatFlash</strong> — daily 60-second breakdowns across YouTube, Instagram, LinkedIn, and X.
+        </p>
         <p>Looking for an entry-level <strong>SOC Analyst or Penetration Tester</strong> role where I can contribute
           from day one.</p>
       </div>
@@ -1129,7 +1147,8 @@
         <div class="info-row"><span class="info-key">status</span><span class="info-val green">open_to_work ●</span>
         </div>
         <div class="info-row"><span class="info-key">base</span><span class="info-val">Visakhapatnam, India</span></div>
-        <div class="info-row"><span class="info-key">open_to</span><span class="info-val">Vizag · Hyd · Blr</span></div>
+        <div class="info-row"><span class="info-key">open_to</span><span class="info-val">Vizag · Hyd · Blr ·
+            Remote</span></div>
         <div class="info-row"><span class="info-key">degree</span><span class="info-val">B.Tech CS — 7.6 CGPA</span>
         </div>
         <div class="info-row"><span class="info-key">currently</span><span class="info-val green">CPENT @ Hackers
@@ -1140,11 +1159,11 @@
             class="info-val">sudheerprasannakumarv@gmail.com</span></div>
       </div>
     </div>
-  </section>
+  </div>
 
   <!-- SKILLS -->
-  <section id="skills">
-    <div class="section-tag">02 — Skills & Tools</div>
+  <div class="section-wrap short" id="skills">
+    <div class="section-tag">02 — Skills &amp; Tools</div>
     <h2 class="reveal">Arsenal</h2>
     <div class="skills-grid reveal">
       <div class="skill-group">
@@ -1166,28 +1185,28 @@
         </div>
       </div>
       <div class="skill-group">
-        <div class="skill-group-title">Network & OS</div>
+        <div class="skill-group-title">Network &amp; OS</div>
         <div class="skill-tags">
           <span class="skill-tag">CCNA</span><span class="skill-tag">TCP/IP</span>
           <span class="skill-tag">Linux Admin</span><span class="skill-tag">Bash Scripting</span>
-          <span class="skill-tag">Cisco IOS</span><span class="skill-tag">Routing & Switching</span>
+          <span class="skill-tag">Cisco IOS</span><span class="skill-tag">Routing &amp; Switching</span>
           <span class="skill-tag">Firewall</span>
         </div>
       </div>
       <div class="skill-group">
         <div class="skill-group-title">Frameworks</div>
         <div class="skill-tags">
-          <span class="skill-tag">MITRE ATT&CK</span><span class="skill-tag">OWASP Top 10</span>
+          <span class="skill-tag">MITRE ATT&amp;CK</span><span class="skill-tag">OWASP Top 10</span>
           <span class="skill-tag">CEH</span><span class="skill-tag">CSA</span>
           <span class="skill-tag">Python</span><span class="skill-tag">CPENT</span>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
   <!-- EXPERIENCE -->
-  <section id="experience">
-    <div class="section-tag">03 — Experience & Training</div>
+  <div class="section-wrap short" id="experience">
+    <div class="section-tag">03 — Experience &amp; Training</div>
     <h2 class="reveal">Timeline</h2>
     <div class="timeline reveal">
       <div class="timeline-item ongoing">
@@ -1201,16 +1220,16 @@
       </div>
       <div class="timeline-item ongoing">
         <div class="tl-date">APR 2026 — PRESENT</div>
-        <div class="tl-role">Founder & Creator <span class="badge-live">LIVE</span></div>
+        <div class="tl-role">Founder &amp; Creator <span class="badge-live">LIVE</span></div>
         <div class="tl-org">ThreatFlash · Self-employed · Remote</div>
-        <div class="tl-desc">Daily 60-second breakdowns of real cyberattacks published across YouTube Shorts, Instagram,
-          LinkedIn, and X. 16+ episodes and growing.</div>
+        <div class="tl-desc">Daily 60-second breakdowns of real cyberattacks across YouTube Shorts, Instagram, LinkedIn,
+          and X. 16+ episodes and growing.</div>
         <div class="tl-tags"><span class="tl-tag">Threat Intelligence</span><span class="tl-tag">Content
             Creation</span><span class="tl-tag">YouTube</span></div>
       </div>
       <div class="timeline-item">
         <div class="tl-date">DEC 2025 — MAR 2026</div>
-        <div class="tl-role">Cybersecurity Trainee — CEH & SOC (CSA)</div>
+        <div class="tl-role">Cybersecurity Trainee — CEH &amp; SOC (CSA)</div>
         <div class="tl-org">Hacker School · Cartel Software Pvt. Ltd. · Hyderabad</div>
         <div class="tl-desc">Hands-on training across offensive and defensive security. Built SOC workflows from scratch
           using enterprise SIEM platforms.</div>
@@ -1219,7 +1238,7 @@
       </div>
       <div class="timeline-item">
         <div class="tl-date">OCT — NOV 2025</div>
-        <div class="tl-role">CCNA & Linux Trainee</div>
+        <div class="tl-role">CCNA &amp; Linux Trainee</div>
         <div class="tl-org">Zoom Technologies · Hyderabad</div>
         <div class="tl-desc">CCNA (200-301) + Cisco Security + Linux Administration + Advanced Linux. The networking and
           OS foundation that makes security tools make sense.</div>
@@ -1228,15 +1247,15 @@
       </div>
       <div class="timeline-item">
         <div class="tl-date">2021 — 2025</div>
-        <div class="tl-role">B.Tech — Computer Science & Engineering</div>
+        <div class="tl-role">B.Tech — Computer Science &amp; Engineering</div>
         <div class="tl-org">Raghu Engineering College · Visakhapatnam · CGPA 7.6</div>
         <div class="tl-desc">Member of Photography Club. Participated in cybersecurity and AI-focused hackathons.</div>
       </div>
     </div>
-  </section>
+  </div>
 
   <!-- THREATFLASH -->
-  <section id="threatflash">
+  <div class="section-wrap short" id="threatflash">
     <div class="section-tag">04 — ThreatFlash</div>
     <h2 class="reveal">The Channel</h2>
     <div class="tf-hero reveal">
@@ -1271,10 +1290,10 @@
         <a href="https://x.com/threatflash" target="_blank" class="tf-platform">✕ X / Twitter</a>
       </div>
     </div>
-  </section>
+  </div>
 
   <!-- CERTIFICATIONS -->
-  <section id="certifications">
+  <div class="section-wrap short" id="certifications">
     <div class="section-tag">05 — Certifications</div>
     <h2 class="reveal">Credentials</h2>
     <div class="certs-grid reveal">
@@ -1316,74 +1335,64 @@
         <div class="cert-id">REF: ZTR000339</div>
         <div class="cert-view">↗ View Certificate</div>
       </a>
-      <div class="cert-card" style="border-style:dashed;opacity:0.6;cursor:default;">
+      <div class="cert-card" style="border-style:dashed;opacity:.6;cursor:default;">
         <div class="cert-issuer">Hackers School Institute · Bangalore</div>
         <div class="cert-name">CPENT — Certified Penetration Testing Professional</div>
         <div class="cert-date" style="color:var(--green);">In Progress ●</div>
       </div>
     </div>
-  </section>
+  </div>
 
   <!-- CONTACT -->
-  <section id="contact">
+  <div class="section-wrap short" id="contact">
     <div class="section-tag">06 — Contact</div>
     <div class="reveal">
       <div class="contact-intro">Let's <span>connect.</span></div>
       <div class="contact-sub">Open to SOC Analyst and Penetration Tester roles in Visakhapatnam, Hyderabad, and
         Bangalore. Also open to remote opportunities and cybersecurity collaborations.</div>
-
       <div class="contact-section-label">// Professional</div>
       <div class="contact-grid">
         <a href="mailto:sudheerprasannakumarv@gmail.com" class="contact-link"><span
-            class="contact-link-icon">@</span>sudheerprasannakumarv@gmail.com</a>
+            class="contact-link-icon">@</span><span class="contact-link-text">sudheerprasannakumarv@gmail.com</span></a>
         <a href="https://www.linkedin.com/in/sudheerprasannakumarvasetty" target="_blank" class="contact-link"><span
-            class="contact-link-icon">in</span>LinkedIn — Sudheer Prasanna Kumar</a>
+            class="contact-link-icon">in</span><span class="contact-link-text">LinkedIn — Sudheer Prasanna
+            Kumar</span></a>
         <a href="https://github.com/sudheerprasannakumarvasetty" target="_blank" class="contact-link"><span
-            class="contact-link-icon">⌥</span>GitHub — sudheerprasannakumarvasetty</a>
+            class="contact-link-icon">⌥</span><span class="contact-link-text">GitHub —
+            sudheerprasannakumarvasetty</span></a>
         <a href="https://x.com/SudheerVasetty" target="_blank" class="contact-link"><span
-            class="contact-link-icon">✕</span>X — @SudheerVasetty</a>
+            class="contact-link-icon">✕</span><span class="contact-link-text">X — @SudheerVasetty</span></a>
         <a href="https://www.instagram.com/sudheerv_/" target="_blank" class="contact-link"><span
-            class="contact-link-icon">◈</span>Instagram — @sudheerv_</a>
+            class="contact-link-icon">◈</span><span class="contact-link-text">Instagram — @sudheerv_</span></a>
       </div>
-
       <div class="contact-section-label">// ThreatFlash</div>
       <div class="contact-grid">
         <a href="https://www.youtube.com/@ThreatFlash" target="_blank" class="contact-link"><span
-            class="contact-link-icon">▶</span>YouTube @ThreatFlash</a>
+            class="contact-link-icon">▶</span><span class="contact-link-text">YouTube @ThreatFlash</span></a>
         <a href="https://www.instagram.com/threatflash" target="_blank" class="contact-link"><span
-            class="contact-link-icon">◈</span>Instagram @threatflash</a>
+            class="contact-link-icon">◈</span><span class="contact-link-text">Instagram @threatflash</span></a>
         <a href="https://x.com/threatflash" target="_blank" class="contact-link"><span
-            class="contact-link-icon">✕</span>X @threatflash</a>
+            class="contact-link-icon">✕</span><span class="contact-link-text">X @threatflash</span></a>
       </div>
     </div>
-  </section>
+  </div>
 
   <footer>
-    <div class="footer-text">© 2026 <span>Sudheer Prasanna Kumar Vasetty</span> </div>
+    <div class="footer-text">© 2026 <span>Sudheer Prasanna Kumar Vasetty</span></div>
     <div class="footer-text">Visakhapatnam, India · <span>Open to Work</span></div>
   </footer>
 
   <script>
-    // Hamburger menu
-    function toggleMenu() {
-      document.getElementById('mobileMenu').classList.toggle('open');
-    }
-
-    // Close menu on outside click
+    function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open') }
+    function closeMenu() { document.getElementById('mobileMenu').classList.remove('open') }
     document.addEventListener('click', function (e) {
-      const menu = document.getElementById('mobileMenu');
-      const ham = document.getElementById('hamburger');
-      if (!menu.contains(e.target) && !ham.contains(e.target)) {
-        menu.classList.remove('open');
-      }
+      const m = document.getElementById('mobileMenu'), h = document.getElementById('ham');
+      if (!m.contains(e.target) && !h.contains(e.target)) m.classList.remove('open');
     });
-
-    // Scroll reveal
-    const reveals = document.querySelectorAll('.reveal');
     const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.08 });
-    reveals.forEach(r => obs.observe(r));
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible') });
+    }, { threshold: 0.07 });
+    document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
   </script>
 </body>
 
